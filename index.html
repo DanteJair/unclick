@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link rel="icon" type="image/png" href="1.JPG">
+  <link rel="icon" type="image/png" href="1.JPG">
   <title>unclick+</title>
 
   <style>
@@ -19,7 +19,6 @@
       align-items: center;
       justify-content: center;
       font-family: "Tahoma";
-      font-style: normal;
       color: #FFA6E7;
       cursor: pointer;
       padding: 20px;
@@ -40,35 +39,28 @@
       object-fit: cover;
       border-radius: 16px;
       margin-bottom: 18px;
+      display: none;
     }
 
-    h1 {
+    h1, h2 {
       font-size: 1.1rem;
       line-height: 1.6;
       margin: 0;
       white-space: pre-line;
-    }
-
-     h2 {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin: 0;
-      white-space: pre-line;
-    }
-
-    p {
-      margin-top: 10px;
-      opacity: 0.6;
-      font-size: 0.8rem;
     }
   </style>
 </head>
 
 <body onclick="changeVibe()">
-  <div class="container">
+
+<div class="container">
+
   <img id="vibeImage" src="1.jpeg" alt="vibe image" />
-  <h1 id="phrase"> Dame click piciosa <3 </h1>
-  <h2 id="phrase"> Desde el primer instante supe que esto era especial,
+
+  <h1 id="phrase">Dame click piciosa &lt;3</h1>
+
+  <h2 id="poem" style="display:none;">
+Desde el primer instante supe que esto era especial,
 como un experimento que funciona a la perfección,
 aunque sea inesperado, torpe y lleno de risas,
 como Sheldon intentando entender los sentimientos humanos.
@@ -109,62 +101,82 @@ Y si alguna vez dudo,
 que sea solo para volver a elegirte,
 una y otra vez,
 como nuestra propia historia perfecta: impredecible, imperfecta,
-pero absolutamente nuestra. </h2>
+pero absolutamente nuestra.
+  </h2>
+
 </div>
 
 <audio id="bgMusic" src="cancion.mp3"></audio>
 
 <script>
-  const phrases = [
-    "Feliz 14 de febrero amogcito👩🏻‍❤️‍💋‍👩🏽",
-    "Te quiero con la eternidad de un baile inolvidable.",
-  ];
 
-  const images = [
-    "1.jpeg",
-    "2.jpeg",
-    "3.jpeg"
+const phrases = [
+  "Feliz 14 de febrero amogcito 👩🏻‍❤️‍💋‍👩🏽",
+  "Te quiero con la eternidad de un baile inolvidable."
+];
 
-  ];
+const images = [
+  "1.jpeg",
+  "2.jpeg",
+  "3.jpeg"
+];
 
-  const phraseEl = document.getElementById("phrase");
-  const imageEl = document.getElementById("vibeImage");
-  const music = document.getElementById("bgMusic");
-    let musicStarted = false;
-  
-  // ESTADO INICIAL ESTÁ MOSTRANDO EL TEXTO
-  let showing = "text";
-  imageEl.style.display = "none";
+const phraseEl = document.getElementById("phrase");
+const poemEl = document.getElementById("poem");
+const imageEl = document.getElementById("vibeImage");
+const music = document.getElementById("bgMusic");
 
-  function changeVibe() {
-    if (!musicStarted) {
-        music.play();
-        music.loop = true;
-        musicStarted = true;
+let musicStarted = false;
+let showing = "intro";
+let phraseIndex = 0;
+
+function changeVibe() {
+
+  // Inicia música en primer clic
+  if (!musicStarted) {
+    music.volume = 0.4;
+    music.play();
+    music.loop = true;
+    musicStarted = true;
+  }
+
+  // Mostrar poema primero
+  if (showing === "intro") {
+    phraseEl.style.display = "none";
+    poemEl.style.display = "block";
+    showing = "poem";
+    return;
+  }
+
+  // Después del poema → mostrar imagen
+  if (showing === "poem") {
+    poemEl.style.display = "none";
+    imageEl.src = images[Math.floor(Math.random() * images.length)];
+    imageEl.style.display = "block";
+    showing = "image";
+    return;
+  }
+
+  // Alternar imagen ↔ frases en orden
+  if (showing === "image") {
+    imageEl.style.display = "none";
+    phraseEl.textContent = phrases[phraseIndex];
+    phraseEl.style.display = "block";
+
+    if (phraseIndex < phrases.length - 1) {
+      phraseIndex++;
+    }
+
+    showing = "text";
+  } else {
+    phraseEl.style.display = "none";
+    imageEl.src = images[Math.floor(Math.random() * images.length)];
+    imageEl.style.display = "block";
+    showing = "image";
+  }
 }
 
-    if (showing === "text") {
-      // ocultar el texto
-      phraseEl.style.display = "none";
-
-      // mostrar imagen
-      imageEl.src = images[Math.floor(Math.random() * images.length)];
-      imageEl.style.display = "block";
-
-      showing = "image";
-    } else {
-      // ocultar imagen
-      imageEl.style.display = "none";
-
-      // mostrar texto
-      phraseEl.textContent =
-        phrases[Math.floor(Math.random() * phrases.length)];
-      phraseEl.style.display = "block";
-
-      showing = "text";
-    }
-  }
 </script>
-  
+
 </body>
 </html>
