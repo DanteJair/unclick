@@ -130,6 +130,25 @@ let musicStarted = false;
 let showing = "intro";
 let phraseIndex = 0;
 
+const fullPoem = poemEl.textContent;
+poemEl.textContent = ""; // vaciar poema al inicio
+
+// EFECTO MAQUINA DE ESCRIBIR
+function typeWriter(text, element, speed = 20) {
+  let i = 0;
+  element.textContent = "";
+
+  function typing() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+
+  typing();
+}
+
 function changeVibe() {
 
   // Inicia música en primer clic
@@ -140,15 +159,16 @@ function changeVibe() {
     musicStarted = true;
   }
 
-  // Mostrar poema primero
+  // Mostrar poema con efecto
   if (showing === "intro") {
     phraseEl.style.display = "none";
     poemEl.style.display = "block";
+    typeWriter(fullPoem, poemEl, 15); // velocidad aquí
     showing = "poem";
     return;
   }
 
-  // Después del poema → mostrar imagen
+  // Después del poema → imagen
   if (showing === "poem") {
     poemEl.style.display = "none";
     imageEl.src = images[Math.floor(Math.random() * images.length)];
