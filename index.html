@@ -189,16 +189,21 @@ function changeVibe() {
 
   if (showing === "poem") {
     poemEl.style.display = "none";
+
     imageEl.src = images[imageIndex];
+    imageEl.style.display = "block"; // 🔥 ESTA LÍNEA FALTABA
+
     if (imageIndex < images.length - 1) {
-  imageIndex++;
-}
+      imageIndex++;
+    }
+
     showing = "image";
     return;
   }
 
   if (showing === "image") {
     imageEl.style.display = "none";
+
     phraseEl.textContent = phrases[phraseIndex];
     phraseEl.style.display = "block";
 
@@ -209,10 +214,13 @@ function changeVibe() {
     showing = "text";
   } else {
     phraseEl.style.display = "none";
+
     imageEl.src = images[imageIndex];
+    imageEl.style.display = "block"; // 🔥 ESTA TAMBIÉN
+
     if (imageIndex < images.length - 1) {
-    imageIndex++;
-}
+      imageIndex++;
+    }
 
     showing = "image";
   }
