@@ -148,6 +148,8 @@ const music = document.getElementById("bgMusic");
 let musicStarted = false;
 let showing = "intro";
 let phraseIndex = 0;
+let imageIndex = 0;
+
 
 const fullPoem = poemEl.textContent;
 poemEl.textContent = "";
@@ -187,8 +189,10 @@ function changeVibe() {
 
   if (showing === "poem") {
     poemEl.style.display = "none";
-    imageEl.src = images[Math.floor(Math.random() * images.length)];
-    imageEl.style.display = "block";
+    imageEl.src = images[imageIndex];
+    if (imageIndex < images.length - 1) {
+  imageIndex++;
+}
     showing = "image";
     return;
   }
@@ -205,8 +209,11 @@ function changeVibe() {
     showing = "text";
   } else {
     phraseEl.style.display = "none";
-    imageEl.src = images[Math.floor(Math.random() * images.length)];
-    imageEl.style.display = "block";
+    imageEl.src = images[imageIndex];
+    if (imageIndex < images.length - 1) {
+    imageIndex++;
+}
+
     showing = "image";
   }
 }
