@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="1.JPG">
-  <title>unclick+</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="1.JPG">
+<title>unclick+</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #0049F7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Tahoma";
-      color: #FFA6E7;
-      cursor: pointer;
-      padding: 20px;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-image: url("fondo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(0,0,0,0.4);
+  background-blend-mode: darken;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Tahoma";
+  color: #FFA6E7;
+  cursor: pointer;
+  padding: 20px;
+}
 
-    .container {
-      text-align: center;
-      width: 100%;
-      max-width: 500px;
-      padding: 24px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-    }
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
 
-    img {
-      width: 100%;
-      height: auto;
-      max-height: 80vh;   /* que pueda crecer más */
-      object-fit: contain; /* NO corta la imagen */
-      border-radius: 16px;
-      margin-bottom: 18px;
-    }
+img {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto 18px auto;
+  object-fit: contain;
+  border-radius: 16px;
+}
 
-    h1, h2 {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin: 0;
-      white-space: pre-line;
-    }
-  </style>
+h1, h2 {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+</style>
 </head>
 
 <body onclick="changeVibe()">
 
 <div class="container">
 
-  <img id="vibeImage" src="1.jpeg" alt="vibe image" />
+<img id="vibeImage" src="1.jpeg" alt="vibe image" style="display:none;" />
 
-  <h1 id="phrase">Dame click piciosa &lt;3</h1>
+<h1 id="phrase">Dame click piciosa &lt;3</h1>
 
-  <h2 id="poem" style="display:none;">
+<h2 id="poem" style="display:none;">
 Desde el primer instante supe que esto era especial,
 como un experimento que funciona a la perfección,
 aunque sea inesperado, torpe y lleno de risas,
@@ -102,7 +112,7 @@ que sea solo para volver a elegirte,
 una y otra vez,
 como nuestra propia historia perfecta: impredecible, imperfecta,
 pero absolutamente nuestra.
-  </h2>
+</h2>
 
 </div>
 
@@ -131,10 +141,10 @@ let showing = "intro";
 let phraseIndex = 0;
 
 const fullPoem = poemEl.textContent;
-poemEl.textContent = ""; // vaciar poema al inicio
+poemEl.textContent = "";
 
 // EFECTO MAQUINA DE ESCRIBIR
-function typeWriter(text, element, speed = 20) {
+function typeWriter(text, element, speed = 18) {
   let i = 0;
   element.textContent = "";
 
@@ -151,7 +161,6 @@ function typeWriter(text, element, speed = 20) {
 
 function changeVibe() {
 
-  // Inicia música en primer clic
   if (!musicStarted) {
     music.volume = 0.4;
     music.play();
@@ -159,16 +168,14 @@ function changeVibe() {
     musicStarted = true;
   }
 
-  // Mostrar poema con efecto
   if (showing === "intro") {
     phraseEl.style.display = "none";
     poemEl.style.display = "block";
-    typeWriter(fullPoem, poemEl, 15); // velocidad aquí
+    typeWriter(fullPoem, poemEl, 15);
     showing = "poem";
     return;
   }
 
-  // Después del poema → imagen
   if (showing === "poem") {
     poemEl.style.display = "none";
     imageEl.src = images[Math.floor(Math.random() * images.length)];
@@ -177,7 +184,6 @@ function changeVibe() {
     return;
   }
 
-  // Alternar imagen ↔ frases en orden
   if (showing === "image") {
     imageEl.style.display = "none";
     phraseEl.textContent = phrases[phraseIndex];
