@@ -121,12 +121,20 @@ pero absolutamente nuestra.`,
 
   const phraseEl = document.getElementById("phrase");
   const imageEl = document.getElementById("vibeImage");
-
+  const music = document.getElementById("bgMusic");
+    let musicStarted = false;
+  
   // ESTADO INICIAL ESTÁ MOSTRANDO EL TEXTO
   let showing = "text";
   imageEl.style.display = "none";
 
   function changeVibe() {
+    if (!musicStarted) {
+        music.play();
+        music.loop = true;
+        musicStarted = true;
+}
+
     if (showing === "text") {
       // ocultar el texto
       phraseEl.style.display = "none";
@@ -149,6 +157,8 @@ pero absolutamente nuestra.`,
     }
   }
 </script>
-
+  
+<audio id="bgMusic" src="cancion.mp3"></audio>
+  
 </body>
 </html>
