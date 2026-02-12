@@ -149,12 +149,12 @@ let musicStarted = false;
 let showing = "intro";
 let phraseIndex = 0;
 let imageIndex = 0;
-
+let orderedMode = true;
 
 const fullPoem = poemEl.textContent;
 poemEl.textContent = "";
 
-// EFECTO MAQUINA DE ESCRIBIR
+// Efecto máquina de escribir
 function typeWriter(text, element, speed = 18) {
   let i = 0;
   element.textContent = "";
@@ -179,6 +179,7 @@ function changeVibe() {
     musicStarted = true;
   }
 
+  // INTRO → POEMA
   if (showing === "intro") {
     phraseEl.style.display = "none";
     poemEl.style.display = "block";
@@ -187,42 +188,59 @@ function changeVibe() {
     return;
   }
 
+  // POEMA → PRIMERA IMAGEN
   if (showing === "poem") {
     poemEl.style.display = "none";
 
     imageEl.src = images[imageIndex];
-    imageEl.style.display = "block"; // 🔥 ESTA LÍNEA FALTABA
+    imageEl.style.display = "block";
 
-    if (imageIndex < images.length - 1) {
-      imageIndex++;
-    }
-
+    imageIndex++;
     showing = "image";
     return;
   }
 
+  // IMAGEN → TEXTO
   if (showing === "image") {
     imageEl.style.display = "none";
 
-    phraseEl.textContent = phrases[phraseIndex];
-    phraseEl.style.display = "block";
-
-    if (phraseIndex < phrases.length - 1) {
+    // TEXTO EN ORDEN O RANDOM
+    if (orderedMode) {
+      phraseEl.textContent = phrases[phraseIndex];
       phraseIndex++;
+    } else {
+      phraseEl.textContent =
+        phrases[Math.floor(Math.random() * phrases.length)];
     }
 
+    phraseEl.style.display = "block";
     showing = "text";
-  } else {
+  } 
+
+  // TEXTO → IMAGEN
+  else {
     phraseEl.style.display = "none";
 
-    imageEl.src = images[imageIndex];
-    imageEl.style.display = "block"; // 🔥 ESTA TAMBIÉN
-
-    if (imageIndex < images.length - 1) {
+    // IMÁGENES EN ORDEN O RANDOM
+    if (orderedMode) {
+      imageEl.src = images[imageIndex];
       imageIndex++;
+    } else {
+      imageEl.src =
+        images[Math.floor(Math.random() * images.length)];
     }
 
+    imageEl.style.display = "block";
     showing = "image";
+  }
+
+  // 🔥 CUANDO SE ACABA TODO → RANDOM
+  if (
+    orderedMode &&
+    phraseIndex >= phrases.length &&
+    imageIndex >= images.length
+  ) {
+    orderedMode = false;
   }
 }
 
